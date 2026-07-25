@@ -30,7 +30,7 @@ export const updateProfile = createServerFn({ method: "POST" })
       .parse(raw),
   )
   .handler(async ({ data, context }) => {
-    const payload: Record<string, unknown> = {};
+    const payload: { display_name?: string; bio?: string; avatar_url?: string | null } = {};
     if (data.display_name !== undefined) payload.display_name = data.display_name;
     if (data.bio !== undefined) payload.bio = data.bio;
     if (data.avatar_url !== undefined) payload.avatar_url = data.avatar_url || null;
@@ -50,9 +50,11 @@ export const updateSettings = createServerFn({ method: "POST" })
       .parse(raw),
   )
   .handler(async ({ data, context }) => {
-    const payload: Record<string, unknown> = { updated_at: new Date().toISOString() };
+    const payload: { theme?: "dark" | "light"; preferences?: unknown; updated_at: string } = {
+      updated_at: new Date().toISOString(),
+    };
     if (data.theme) payload.theme = data.theme;
-    if (data.preferences) payload.preferences = data.preferences;
+    if (data.preferences) payload.preferences = JSON.parse(JSON.stringify(data.preferences));
     const { error } = await context.supabase
       .from("user_settings")
       .upsert({ user_id: context.userId, ...payload }, { onConflict: "user_id" });

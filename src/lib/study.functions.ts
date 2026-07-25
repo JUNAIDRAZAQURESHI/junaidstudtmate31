@@ -58,7 +58,7 @@ export const generateStudyItem = createServerFn({ method: "POST" })
         title,
         source_text: data.input.slice(0, 20000),
         output,
-        metadata: (data.options ?? {}) as Record<string, unknown>,
+        metadata: JSON.parse(JSON.stringify(data.options ?? {})),
         document_id: data.documentId ?? null,
       });
       if (error) throw new Error(error.message);
