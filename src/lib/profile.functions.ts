@@ -50,7 +50,7 @@ export const updateSettings = createServerFn({ method: "POST" })
       .parse(raw),
   )
   .handler(async ({ data, context }) => {
-    const payload: { theme?: "dark" | "light"; preferences?: unknown; updated_at: string } = {
+    const payload: { theme?: "dark" | "light"; preferences?: import("@/integrations/supabase/types").Json; updated_at: string } = {
       updated_at: new Date().toISOString(),
     };
     if (data.theme) payload.theme = data.theme;
