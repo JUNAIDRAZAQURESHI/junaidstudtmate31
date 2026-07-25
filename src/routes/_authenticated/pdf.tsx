@@ -16,10 +16,8 @@ export const Route = createFileRoute("/_authenticated/pdf")({ component: PDFPage
 async function extractPdfText(file: File): Promise<string> {
   // pdfjs-dist v6 ESM
   const pdfjs = await import("pdfjs-dist");
-  // Use worker from same package via URL
-  // @ts-expect-error worker src path
-  const workerSrc = (await import("pdfjs-dist/build/pdf.worker.min.mjs?url")).default;
-  (pdfjs.GlobalWorkerOptions as { workerSrc: string }).workerSrc = workerSrc;
+  const workerMod = (await import("pdfjs-dist/build/pdf.worker.min.mjs?url")) as { default: string };
+  (pdfjs.GlobalWorkerOptions as { workerSrc: string }).workerSrc = workerMod.default;
 
   const buf = await file.arrayBuffer();
   const doc = await pdfjs.getDocument({ data: buf }).promise;
