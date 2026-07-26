@@ -1,14 +1,17 @@
 import { createFileRoute, Outlet, redirect, Link, useRouter, useLocation } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import {
   Sparkles, MessageSquare, FileText, BookOpen, ListChecks, GraduationCap,
   Languages, History, Settings, User, LogOut, Menu, X,
+  FileUser, Globe, SpellCheck, CreditCard, ShieldCheck,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Footer } from "@/components/Footer";
 import { toast } from "sonner";
-import { useQueryClient } from "@tanstack/react-query";
+import { amIAdmin } from "@/lib/admin.functions";
 
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
@@ -28,7 +31,11 @@ const NAV = [
   { to: "/mcq", label: "MCQ Generator", icon: ListChecks },
   { to: "/quiz", label: "Quiz Generator", icon: GraduationCap },
   { to: "/translate", label: "Translation", icon: Languages },
+  { to: "/resume", label: "Resume Builder", icon: FileUser },
+  { to: "/portfolio", label: "Portfolio", icon: Globe },
+  { to: "/grammar", label: "Grammar", icon: SpellCheck },
   { to: "/history", label: "History", icon: History },
+  { to: "/payment", label: "Upgrade", icon: CreditCard },
   { to: "/profile", label: "Profile", icon: User },
   { to: "/settings", label: "Settings", icon: Settings },
 ] as const;
