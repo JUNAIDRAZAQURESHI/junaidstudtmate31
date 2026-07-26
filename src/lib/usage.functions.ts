@@ -1,6 +1,10 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "@/integrations/supabase/types";
 import { z } from "zod";
+
+type SB = SupabaseClient<Database>;
 
 export const KINDS = [
   "chat",
@@ -16,10 +20,7 @@ export const KINDS = [
 
 export type UsageKind = (typeof KINDS)[number];
 
-async function getActivePlanId(
-  supabase: Awaited<ReturnType<typeof requireSupabaseAuth.server>>["context"]["supabase"],
-  userId: string,
-): Promise<string> {
+async function getActivePlanId(supabase: SB, userId: string): Promise<string> {
   const { data } = await supabase
     .from("user_subscriptions")
     .select("plan_id, status, expires_at")
@@ -49,7 +50,7 @@ export const logUsage = createServerFn({ method: "POST" })
 
 /** Throws if the user has exhausted their daily free credits. Returns remaining count. */
 export async function enforceDailyLimit(
-  supabase: Awaited<ReturnType<typeof requireSupabaseAuth.server>>["context"]["supabase"],
+  supabase: SB,
   userId: string,
 ): Promise<{ used: number; limit: number; remaining: number; planId: string }> {
   const planId = await getActivePlanId(supabase, userId);
