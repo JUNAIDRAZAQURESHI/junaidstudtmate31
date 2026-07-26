@@ -42,6 +42,9 @@ export const generateStudyItem = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((raw: unknown) => GenSchema.parse(raw))
   .handler(async ({ data, context }) => {
+    const { enforceDailyLimit } = await import("./usage.functions");
+    await enforceDailyLimit(context.supabase, context.userId);
+
     const messages: ChatMessage[] = [
       { role: "system", content: systemFor(data.kind, data.options ?? {}) },
       { role: "user", content: data.input },
@@ -63,6 +66,13 @@ export const generateStudyItem = createServerFn({ method: "POST" })
       });
       if (error) throw new Error(error.message);
     }
+
+    // Log usage
+    const usageKind =
+      data.kind === "summary" ? "pdf_summary" : data.kind;
+    await context.supabase
+      .from("usage_events")
+      .insert({ user_id: context.userId, kind: usageKind, metadata: { options: data.options ?? {} } });
 
     return { output };
   });
