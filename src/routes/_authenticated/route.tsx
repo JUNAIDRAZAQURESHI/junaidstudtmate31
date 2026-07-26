@@ -1,14 +1,17 @@
 import { createFileRoute, Outlet, redirect, Link, useRouter, useLocation } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import {
   Sparkles, MessageSquare, FileText, BookOpen, ListChecks, GraduationCap,
   Languages, History, Settings, User, LogOut, Menu, X,
+  FileUser, Globe, SpellCheck, CreditCard, ShieldCheck,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Footer } from "@/components/Footer";
 import { toast } from "sonner";
-import { useQueryClient } from "@tanstack/react-query";
+import { amIAdmin } from "@/lib/admin.functions";
 
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
@@ -28,7 +31,11 @@ const NAV = [
   { to: "/mcq", label: "MCQ Generator", icon: ListChecks },
   { to: "/quiz", label: "Quiz Generator", icon: GraduationCap },
   { to: "/translate", label: "Translation", icon: Languages },
+  { to: "/resume", label: "Resume Builder", icon: FileUser },
+  { to: "/portfolio", label: "Portfolio", icon: Globe },
+  { to: "/grammar", label: "Grammar", icon: SpellCheck },
   { to: "/history", label: "History", icon: History },
+  { to: "/payment", label: "Upgrade", icon: CreditCard },
   { to: "/profile", label: "Profile", icon: User },
   { to: "/settings", label: "Settings", icon: Settings },
 ] as const;
@@ -39,6 +46,9 @@ function AuthenticatedLayout() {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState<string>("");
+  const fAdmin = useServerFn(amIAdmin);
+  const { data: admin } = useQuery({ queryKey: ["am-admin"], queryFn: () => fAdmin() });
+  const isAdmin = admin?.isAdmin ?? false;
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => setEmail(data.user?.email ?? ""));
@@ -100,7 +110,13 @@ function AuthenticatedLayout() {
                   </Link>
                 );
               })}
+              {isAdmin && (
+                <Link to="/admin" className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition ${location.pathname.startsWith("/admin") ? "btn-glow font-semibold" : "hover:bg-white/5"}`}>
+                  <ShieldCheck className="h-4 w-4" /> Admin
+                </Link>
+              )}
             </nav>
+
 
             <div className="mt-4 border-t border-white/10 pt-4">
               <div className="flex items-center justify-between gap-2 px-2">

@@ -1,12 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
 import {
   Sparkles, MessageSquare, FileText, ListChecks, Brain, Languages,
-  ArrowRight, Zap, Shield, Cpu, BookOpen,
+  ArrowRight, Zap, Shield, Cpu, BookOpen, FileUser, Globe, SpellCheck,
 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { PublicNav, useAuthed } from "@/components/PublicNav";
 import { Footer } from "@/components/Footer";
-import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -26,49 +24,23 @@ const FEATURES = [
   { icon: BookOpen, title: "Notes Generator", desc: "Turn any topic into clean, exam-ready notes." },
   { icon: ListChecks, title: "MCQ & Quiz", desc: "Generate multiple-choice questions and full quizzes." },
   { icon: Languages, title: "Translation", desc: "Professional translation in dozens of languages." },
-  { icon: Brain, title: "Memory + History", desc: "Every chat and item is saved & searchable." },
+  { icon: FileUser, title: "Resume Builder", desc: "Craft ATS-friendly resumes ready to send." },
+  { icon: Globe, title: "Portfolio Generator", desc: "Ship a live portfolio website in one click." },
+  { icon: SpellCheck, title: "Grammar Checker", desc: "Polish your writing in any language." },
+  { icon: Brain, title: "History + Memory", desc: "Every chat and item is saved & searchable." },
 ];
 
 function Landing() {
-  const [authed, setAuthed] = useState(false);
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => setAuthed(!!data.session));
-  }, []);
+  const authed = useAuthed();
 
   return (
     <div className="bg-aurora relative min-h-screen overflow-hidden">
       <div className="pointer-events-none absolute inset-0 grid-3d opacity-40" />
 
-      {/* Nav */}
-      <header className="relative z-20 mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="relative h-9 w-9">
-            <div className="absolute inset-0 rounded-xl btn-glow" />
-            <Sparkles className="absolute inset-0 m-auto h-5 w-5 text-white" />
-          </div>
-          <span className="text-lg font-bold">
-            AI StudyMate <span className="text-gradient">Pro</span>
-          </span>
-        </Link>
-        <div className="flex items-center gap-3">
-          <ThemeToggle />
-          {authed ? (
-            <Link to="/dashboard" className="btn-glow rounded-xl px-4 py-2 text-sm font-medium hover:btn-glow-hover">
-              Open Dashboard
-            </Link>
-          ) : (
-            <>
-              <Link to="/auth" className="glass rounded-xl px-4 py-2 text-sm">Sign in</Link>
-              <Link to="/auth" search={{ mode: "signup" }} className="btn-glow rounded-xl px-4 py-2 text-sm font-medium hover:btn-glow-hover">
-                Get started
-              </Link>
-            </>
-          )}
-        </div>
-      </header>
+      <PublicNav />
 
       {/* Hero */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 pt-16 pb-24 text-center">
+      <section className="relative z-10 mx-auto max-w-7xl px-6 pt-10 pb-24 text-center">
         <div className="glass mx-auto mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium pop-in">
           <Zap className="h-3.5 w-3.5 text-gradient" />
           <span>Powered by Gemini · Real-time AI</span>
