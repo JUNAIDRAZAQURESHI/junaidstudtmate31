@@ -46,6 +46,9 @@ function AuthenticatedLayout() {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState<string>("");
+  const fAdmin = useServerFn(amIAdmin);
+  const { data: admin } = useQuery({ queryKey: ["am-admin"], queryFn: () => fAdmin() });
+  const isAdmin = admin?.isAdmin ?? false;
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => setEmail(data.user?.email ?? ""));
@@ -107,7 +110,13 @@ function AuthenticatedLayout() {
                   </Link>
                 );
               })}
+              {isAdmin && (
+                <Link to="/admin" className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition ${location.pathname.startsWith("/admin") ? "btn-glow font-semibold" : "hover:bg-white/5"}`}>
+                  <ShieldCheck className="h-4 w-4" /> Admin
+                </Link>
+              )}
             </nav>
+
 
             <div className="mt-4 border-t border-white/10 pt-4">
               <div className="flex items-center justify-between gap-2 px-2">
