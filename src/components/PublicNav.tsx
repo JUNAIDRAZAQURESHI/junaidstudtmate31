@@ -1,8 +1,19 @@
 import { Link } from "@tanstack/react-router";
 import { Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { supabase } from "@/integrations/supabase/client";
 
-export function PublicNav({ authed }: { authed: boolean }) {
+export function useAuthed() {
+  const [authed, setAuthed] = useState(false);
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => setAuthed(!!data.session));
+  }, []);
+  return authed;
+}
+
+export function PublicNav() {
+  const authed = useAuthed();
   return (
     <header className="relative z-20 mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
       <Link to="/" className="flex items-center gap-2">
@@ -37,15 +48,4 @@ export function PublicNav({ authed }: { authed: boolean }) {
       </div>
     </header>
   );
-}
-
-export function useAuthed() {
-  // client-only hook wrapper for public pages
-  const [authed, setAuthed] = (require("react") as typeof import("react")).useState(false);
-  (require("react") as typeof import("react")).useEffect(() => {
-    import("@/integrations/supabase/client").then(({ supabase }) =>
-      supabase.auth.getSession().then(({ data }) => setAuthed(!!data.session)),
-    );
-  }, []);
-  return authed;
 }
