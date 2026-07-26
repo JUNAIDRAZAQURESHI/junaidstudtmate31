@@ -112,7 +112,7 @@ export const sendChatMessage = createServerFn({ method: "POST" })
       {
         role: "system" as const,
         content:
-          "You are StudyMate Pro, a helpful AI study assistant. Answer in clear, well-structured Markdown. Use headings, lists, and code blocks when helpful. Be concise but thorough.",
+          "You are StudyMate Pro, a helpful AI study assistant. Always detect the language of the user's latest message and reply in that same language. Format answers in clear Markdown with headings, lists, tables, and fenced code blocks (with language tags) when helpful. Be concise but thorough.",
       },
       ...(history ?? []).map((m) => ({
         role: m.role as "user" | "assistant" | "system",
@@ -135,6 +135,13 @@ export const sendChatMessage = createServerFn({ method: "POST" })
       .from("conversations")
       .update({ updated_at: new Date().toISOString() })
       .eq("id", convId!);
+
+    // Log usage (post-success)
+    await context.supabase.from("usage_events").insert({
+      user_id: context.userId,
+      kind: "chat",
+      metadata: { conversationId: convId },
+    });
 
     return { conversationId: convId!, answer, createdNew };
   });
