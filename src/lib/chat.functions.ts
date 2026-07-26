@@ -72,6 +72,9 @@ export const sendChatMessage = createServerFn({ method: "POST" })
       .parse(raw),
   )
   .handler(async ({ data, context }) => {
+    const { enforceDailyLimit } = await import("./usage.functions");
+    await enforceDailyLimit(context.supabase, context.userId);
+
     // Ensure conversation exists
     let convId = data.conversationId ?? null;
     let createdNew = false;
