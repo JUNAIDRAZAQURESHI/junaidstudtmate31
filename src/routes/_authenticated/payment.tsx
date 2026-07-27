@@ -1,3 +1,4 @@
+import { BackBar } from "@/components/BackBar";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
@@ -92,6 +93,7 @@ function PaymentPage() {
 
   return (
     <div className="mx-auto max-w-6xl">
+      <BackBar />
       <div className="glass-strong rounded-3xl p-6 md:p-8 pop-in">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>

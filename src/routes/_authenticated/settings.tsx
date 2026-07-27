@@ -1,3 +1,4 @@
+import { BackBar } from "@/components/BackBar";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -19,6 +20,7 @@ function SettingsPage() {
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
+      <BackBar />
       <div className="glass-strong rounded-3xl p-8 pop-in">
         <h1 className="text-3xl font-bold">Settings</h1>
         <p className="mt-1 text-muted-foreground">Personalize your experience.</p>

@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { Loader2, Sparkles, Save } from "lucide-react";
 import { Markdown, CopyButton, DownloadButton } from "@/components/Markdown";
+import { BackBar } from "@/components/BackBar";
 import { generateStudyItem } from "@/lib/study.functions";
 
 type Kind = "summary" | "notes" | "mcq" | "quiz" | "translation";
@@ -52,9 +53,10 @@ export function GeneratorPanel({
 
   return (
     <div className="mx-auto max-w-6xl space-y-6">
-      <div className="glass-strong rounded-3xl p-8 pop-in">
-        <h1 className="text-3xl font-bold">{title}</h1>
-        <p className="mt-1 text-muted-foreground">{subtitle}</p>
+      <BackBar title={title} />
+      <div className="glass-strong rounded-3xl p-6 pop-in sm:p-8">
+        <h1 className="text-2xl font-bold sm:text-3xl">{title}</h1>
+        <p className="mt-1 text-sm text-muted-foreground sm:text-base">{subtitle}</p>
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">

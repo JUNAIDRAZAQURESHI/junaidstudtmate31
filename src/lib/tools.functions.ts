@@ -66,6 +66,8 @@ const PortfolioSchema = z.object({
   email: z.string().email(),
   socials: z.string().max(600).optional(),
   themeColor: z.string().max(30).optional(),
+  designPrompt: z.string().max(1000).optional(),
+  profileImageUrl: z.string().url().max(2000).optional().or(z.literal("")),
 });
 
 export const generatePortfolio = createServerFn({ method: "POST" })
@@ -73,7 +75,7 @@ export const generatePortfolio = createServerFn({ method: "POST" })
   .inputValidator((raw: unknown) => PortfolioSchema.parse(raw))
   .handler(async ({ data, context }) => {
     await enforceDailyLimit(context.supabase, context.userId);
-    const sys = `You are a senior frontend designer. Output ONE complete, self-contained HTML5 document with inline <style> only (no external CSS, no external JS, no images from the internet — use CSS gradients and SVG). It must be a beautiful, modern, single-page portfolio: hero, about, skills grid, projects grid with cards, contact section, footer. Responsive, dark theme by default, glassmorphism accents, smooth CSS animations, semantic HTML, accessible. Return ONLY the raw HTML, no Markdown fences, no explanation.`;
+    const sys = `You are a senior frontend designer. Output ONE complete, self-contained HTML5 document with inline <style> only (no external CSS, no external JS). You MAY reference remote https image URLs supplied by the user (e.g. profile photo). Build a beautiful, modern, single-page portfolio: hero (with the profile photo when provided), about, skills grid, projects grid with cards, contact section, footer. Responsive, dark theme by default, glassmorphism accents, smooth CSS animations, semantic HTML, accessible. Follow the user's "Design direction" faithfully. Return ONLY the raw HTML, no Markdown fences, no explanation.`;
     const user = `Build a portfolio website for:
 Name: ${data.fullName}
 Role: ${data.role}
@@ -84,6 +86,8 @@ Projects: ${data.projects}
 Email: ${data.email}
 Socials: ${data.socials ?? ""}
 Theme accent color hint: ${data.themeColor ?? "electric violet"}
+Design direction: ${data.designPrompt || "Premium futuristic 3D glassmorphism with aurora gradients and floating cards"}
+${data.profileImageUrl ? `Profile photo URL (use as circular hero avatar): ${data.profileImageUrl}` : "No profile photo provided — use a stylized SVG monogram avatar instead."}
 
 Use the accent color in gradients and buttons. Include real anchor navigation. Make it look like a $10k designer site.`;
     let output = await callLovableAI([
@@ -99,10 +103,11 @@ Use the accent color in gradients and buttons. Include real anchor navigation. M
       title: `Portfolio · ${data.fullName}`,
       source_text: JSON.stringify(data).slice(0, 20000),
       output,
-      metadata: { themeColor: data.themeColor ?? null },
+      metadata: { themeColor: data.themeColor ?? null, designPrompt: data.designPrompt ?? null, hasPhoto: !!data.profileImageUrl },
     });
     return { html: output };
   });
+
 
 const GrammarSchema = z.object({
   text: z.string().min(1).max(20000),

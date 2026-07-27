@@ -1,3 +1,4 @@
+import { BackBar } from "@/components/BackBar";
 import { createFileRoute } from "@tanstack/react-router";
 import { GeneratorPanel } from "@/components/GeneratorPanel";
 

@@ -69,10 +69,10 @@ function AuthenticatedLayout() {
       <div className="pointer-events-none absolute inset-0 grid-3d opacity-25" />
 
       {/* Mobile top bar */}
-      <div className="relative z-30 flex items-center justify-between px-4 py-3 md:hidden">
-        <Link to="/dashboard" className="flex items-center gap-2">
-          <div className="relative h-8 w-8"><div className="absolute inset-0 rounded-lg btn-glow" /><Sparkles className="absolute inset-0 m-auto h-4 w-4 text-white" /></div>
-          <span className="font-bold">StudyMate <span className="text-gradient">Pro</span></span>
+      <div className="relative z-30 flex items-center justify-between gap-2 px-4 py-3 md:hidden">
+        <Link to="/dashboard" className="flex min-w-0 items-center gap-2">
+          <div className="relative h-8 w-8 shrink-0"><div className="absolute inset-0 rounded-lg btn-glow" /><Sparkles className="absolute inset-0 m-auto h-4 w-4 text-white" /></div>
+          <span className="truncate font-bold">StudyMate <span className="text-gradient">Pro</span></span>
         </Link>
         <div className="flex items-center gap-2">
           <ThemeToggle />
@@ -86,13 +86,20 @@ function AuthenticatedLayout() {
         {/* Sidebar */}
         <aside className={`fixed inset-y-0 left-0 z-40 w-72 transform p-4 transition-transform md:sticky md:top-0 md:h-screen md:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
           <div className="glass-strong flex h-full flex-col rounded-3xl p-4">
-            <Link to="/dashboard" className="mb-6 hidden items-center gap-2 px-2 md:flex">
-              <div className="relative h-9 w-9"><div className="absolute inset-0 rounded-xl btn-glow" /><Sparkles className="absolute inset-0 m-auto h-5 w-5 text-white" /></div>
-              <div>
-                <div className="font-bold leading-tight">StudyMate <span className="text-gradient">Pro</span></div>
+            <Link to="/dashboard" className="mb-2 hidden items-center gap-2 px-2 md:flex">
+              <div className="relative h-9 w-9 shrink-0"><div className="absolute inset-0 rounded-xl btn-glow" /><Sparkles className="absolute inset-0 m-auto h-5 w-5 text-white" /></div>
+              <div className="min-w-0">
+                <div className="truncate font-bold leading-tight">StudyMate <span className="text-gradient">Pro</span></div>
                 <div className="text-[10px] text-muted-foreground">AI Learning Suite</div>
               </div>
             </Link>
+            <div className="mb-4 hidden px-2 md:block">
+              <span className="glass inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-medium text-muted-foreground">
+                <Sparkles className="h-3 w-3 text-gradient" />
+                Built by <span className="text-gradient font-semibold">Junaid Raza Qureshi</span>
+              </span>
+            </div>
+
 
             <nav className="flex flex-1 flex-col gap-1 overflow-y-auto">
               {NAV.map((n) => {
