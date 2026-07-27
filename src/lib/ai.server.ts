@@ -1,7 +1,13 @@
 // Server-only Lovable AI Gateway helper. Never import from client-reachable code at module scope.
 const GATEWAY_URL = "https://ai.gateway.lovable.dev/v1/chat/completions";
 
-export type ChatMessage = { role: "system" | "user" | "assistant"; content: string };
+export type ChatContentPart =
+  | { type: "text"; text: string }
+  | { type: "image_url"; image_url: { url: string } };
+export type ChatMessage = {
+  role: "system" | "user" | "assistant";
+  content: string | ChatContentPart[];
+};
 
 export async function callLovableAI(messages: ChatMessage[], model = "google/gemini-3.6-flash"): Promise<string> {
   const key = process.env.LOVABLE_API_KEY;
@@ -49,7 +55,6 @@ export async function streamLovableAI(messages: ChatMessage[], model = "google/g
     return new Response(JSON.stringify({ error: msg }), { status, headers: { "Content-Type": "application/json" } });
   }
 
-  // Convert OpenAI-style SSE stream into a plain text/event-stream we forward
   const reader = upstream.body.getReader();
   const decoder = new TextDecoder();
   const encoder = new TextEncoder();
