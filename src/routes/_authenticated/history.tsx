@@ -43,6 +43,7 @@ function HistoryPage() {
 
   return (
     <div className="mx-auto max-w-6xl space-y-6">
+      <BackBar />
       <div className="glass-strong rounded-3xl p-8 pop-in">
         <h1 className="text-3xl font-bold">History</h1>
         <p className="mt-1 text-muted-foreground">All your saved summaries, notes, quizzes, and translations.</p>

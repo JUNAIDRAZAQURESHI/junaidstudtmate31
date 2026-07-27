@@ -71,6 +71,7 @@ function AdminPage() {
   if (!isAdmin) {
     return (
       <div className="mx-auto max-w-2xl">
+      <BackBar />
         <div className="glass-strong rounded-3xl p-8 text-center pop-in">
           <ShieldCheck className="mx-auto h-10 w-10 text-primary" />
           <h1 className="mt-4 text-2xl font-bold">Admin access</h1>

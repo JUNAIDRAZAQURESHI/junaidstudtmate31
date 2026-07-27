@@ -30,6 +30,7 @@ function GrammarPage() {
 
   return (
     <div className="mx-auto max-w-6xl">
+      <BackBar />
       <div className="glass-strong rounded-3xl p-6 pop-in">
         <div className="flex items-center gap-3">
           <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl btn-glow"><SpellCheck className="h-5 w-5 text-white" /></div>
