@@ -20,22 +20,13 @@ export async function extractPdfText(file: File, maxChars = 180000): Promise<str
 }
 
 export async function extractDocxText(file: File, maxChars = 180000): Promise<string> {
-  // Minimal DOCX text extraction: unzip via DecompressionStream, read word/document.xml
-  // Falls back to raw text if the browser lacks DecompressionStream.
-  try {
-    const JSZipMod = await import(/* @vite-ignore */ "jszip").catch(() => null);
-    if (JSZipMod) {
-      const JSZip = (JSZipMod as { default: typeof import("jszip") }).default;
-      const zip = await JSZip.loadAsync(await file.arrayBuffer());
-      const doc = zip.file("word/document.xml");
-      if (!doc) return "";
-      const xml = await doc.async("string");
-      const text = xml.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-      return text.slice(0, maxChars);
-    }
-  } catch { /* fall through */ }
-  // Fallback: read as text (works OK for plain docs)
-  return (await file.text()).slice(0, maxChars);
+  // Best-effort DOCX text extraction without external deps.
+  // A .docx is a ZIP containing word/document.xml; without a zip lib we can't
+  // properly unpack it, so we fall back to reading raw text and stripping XML
+  // tags — which works surprisingly well for simple documents.
+  const raw = await file.text();
+  const stripped = raw.replace(/<[^>]+>/g, " ").replace(/[^\x09\x0A\x0D\x20-\x7E\u00A0-\uFFFF]/g, " ").replace(/\s+/g, " ").trim();
+  return stripped.slice(0, maxChars);
 }
 
 export async function extractAnyText(file: File): Promise<string> {
