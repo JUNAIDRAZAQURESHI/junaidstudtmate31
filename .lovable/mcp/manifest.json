@@ -1,0 +1,302 @@
+{
+  "version": 1,
+  "sdk_version": "0.25.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://sfnauefvosnmlhvxsrtz.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "ai-studymate-pro",
+      "version": "1.0.0",
+      "title": "AI StudyMate Pro"
+    },
+    "tools": [
+      {
+        "name": "summarize_text",
+        "title": "Summarize text",
+        "description": "Produce a structured Markdown summary (Overview, Key Points, Terms, Takeaways) and save it to history.",
+        "annotations": {
+          "readOnlyHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 60000,
+              "description": "Text to summarize."
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            }
+          },
+          "required": [
+            "input"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "generate_notes",
+        "title": "Generate study notes",
+        "description": "Turn raw source text into well-structured Markdown study notes and save them to the user's history.",
+        "annotations": {
+          "readOnlyHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 60000,
+              "description": "Source content to convert into notes."
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120,
+              "description": "Optional title for the saved item."
+            }
+          },
+          "required": [
+            "input"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "generate_mcq",
+        "title": "Generate multiple-choice questions",
+        "description": "Create MCQs from source content at a chosen difficulty and save them to history.",
+        "annotations": {
+          "readOnlyHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 60000,
+              "description": "Source content."
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 30,
+              "default": 10,
+              "description": "How many questions."
+            },
+            "difficulty": {
+              "type": "string",
+              "enum": [
+                "easy",
+                "medium",
+                "hard"
+              ],
+              "default": "medium"
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            }
+          },
+          "required": [
+            "input"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "generate_quiz",
+        "title": "Generate a mixed quiz",
+        "description": "Create a mixed-format quiz (short answer, true/false, fill-in-the-blank) with an answer key.",
+        "annotations": {
+          "readOnlyHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 60000
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 30,
+              "default": 10
+            },
+            "difficulty": {
+              "type": "string",
+              "enum": [
+                "easy",
+                "medium",
+                "hard"
+              ],
+              "default": "medium"
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            }
+          },
+          "required": [
+            "input"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "translate_text",
+        "title": "Translate text",
+        "description": "Translate text into a target language, preserving meaning and formatting. Saves the result to history.",
+        "annotations": {
+          "readOnlyHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 60000,
+              "description": "Text to translate."
+            },
+            "language": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 60,
+              "description": "Target language, e.g. 'Spanish', 'Urdu'."
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 120
+            }
+          },
+          "required": [
+            "input",
+            "language"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "check_grammar",
+        "title": "Check grammar",
+        "description": "Return a corrected version of the text plus a list of changes with brief explanations.",
+        "annotations": {
+          "readOnlyHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 20000,
+              "description": "Text to proofread."
+            },
+            "language": {
+              "type": "string",
+              "maxLength": 60,
+              "description": "Language hint, defaults to auto-detect."
+            }
+          },
+          "required": [
+            "text"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_recent_items",
+        "title": "List recent study items",
+        "description": "List the signed-in user's recent study items (notes, summaries, MCQs, quizzes, translations, grammar checks).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "summary",
+                "notes",
+                "mcq",
+                "quiz",
+                "translation",
+                "grammar",
+                "resume",
+                "portfolio"
+              ]
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_item",
+        "title": "Get a study item",
+        "description": "Fetch the full output of a saved study item by ID for the signed-in user.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
