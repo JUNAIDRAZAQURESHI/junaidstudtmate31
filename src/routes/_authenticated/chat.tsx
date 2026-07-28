@@ -194,6 +194,7 @@ function ChatPage() {
     if (f.size > 20 * 1024 * 1024) { toast.error("File too large (max 20 MB)."); return; }
     try {
       toast.message("Reading file…");
+      const { extractAnyText } = await import("@/lib/extract.client");
       const text = await extractAnyText(f);
       if (!text.trim()) { toast.error("Couldn't extract text from that file."); return; }
       setAttachedFileName(f.name);
