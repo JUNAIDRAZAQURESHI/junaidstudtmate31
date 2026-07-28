@@ -60,7 +60,7 @@ const PortfolioSchema = z.object({
   fullName: z.string().min(2).max(120),
   role: z.string().min(2).max(120),
   tagline: z.string().max(300).optional(),
-  about: z.string().min(5).max(3000),
+  about: z.string().min(1).max(3000),
   skills: z.string().max(2000),
   projects: z.string().max(6000),
   email: z.string().email(),
