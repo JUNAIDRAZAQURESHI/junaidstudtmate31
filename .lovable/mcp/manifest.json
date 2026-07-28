@@ -25,6 +25,7 @@
           "openWorldHint": false
         },
         "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
           "type": "object",
           "properties": {
             "input": {
@@ -40,9 +41,7 @@
           },
           "required": [
             "input"
-          ],
-          "additionalProperties": false,
-          "$schema": "http://json-schema.org/draft-07/schema#"
+          ]
         },
         "outputSchema": null
       },
@@ -55,6 +54,7 @@
           "openWorldHint": false
         },
         "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
           "type": "object",
           "properties": {
             "input": {
@@ -64,16 +64,14 @@
               "description": "Source content to convert into notes."
             },
             "title": {
+              "description": "Optional title for the saved item.",
               "type": "string",
-              "maxLength": 120,
-              "description": "Optional title for the saved item."
+              "maxLength": 120
             }
           },
           "required": [
             "input"
-          ],
-          "additionalProperties": false,
-          "$schema": "http://json-schema.org/draft-07/schema#"
+          ]
         },
         "outputSchema": null
       },
@@ -86,6 +84,7 @@
           "openWorldHint": false
         },
         "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
           "type": "object",
           "properties": {
             "input": {
@@ -95,20 +94,20 @@
               "description": "Source content."
             },
             "count": {
+              "default": 10,
+              "description": "How many questions.",
               "type": "integer",
               "minimum": 1,
-              "maximum": 30,
-              "default": 10,
-              "description": "How many questions."
+              "maximum": 30
             },
             "difficulty": {
+              "default": "medium",
               "type": "string",
               "enum": [
                 "easy",
                 "medium",
                 "hard"
-              ],
-              "default": "medium"
+              ]
             },
             "title": {
               "type": "string",
@@ -117,9 +116,7 @@
           },
           "required": [
             "input"
-          ],
-          "additionalProperties": false,
-          "$schema": "http://json-schema.org/draft-07/schema#"
+          ]
         },
         "outputSchema": null
       },
@@ -132,6 +129,7 @@
           "openWorldHint": false
         },
         "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
           "type": "object",
           "properties": {
             "input": {
@@ -140,19 +138,19 @@
               "maxLength": 60000
             },
             "count": {
+              "default": 10,
               "type": "integer",
               "minimum": 1,
-              "maximum": 30,
-              "default": 10
+              "maximum": 30
             },
             "difficulty": {
+              "default": "medium",
               "type": "string",
               "enum": [
                 "easy",
                 "medium",
                 "hard"
-              ],
-              "default": "medium"
+              ]
             },
             "title": {
               "type": "string",
@@ -161,9 +159,7 @@
           },
           "required": [
             "input"
-          ],
-          "additionalProperties": false,
-          "$schema": "http://json-schema.org/draft-07/schema#"
+          ]
         },
         "outputSchema": null
       },
@@ -176,6 +172,7 @@
           "openWorldHint": false
         },
         "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
           "type": "object",
           "properties": {
             "input": {
@@ -198,9 +195,7 @@
           "required": [
             "input",
             "language"
-          ],
-          "additionalProperties": false,
-          "$schema": "http://json-schema.org/draft-07/schema#"
+          ]
         },
         "outputSchema": null
       },
@@ -213,6 +208,7 @@
           "openWorldHint": false
         },
         "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
           "type": "object",
           "properties": {
             "text": {
@@ -222,16 +218,14 @@
               "description": "Text to proofread."
             },
             "language": {
+              "description": "Language hint, defaults to auto-detect.",
               "type": "string",
-              "maxLength": 60,
-              "description": "Language hint, defaults to auto-detect."
+              "maxLength": 60
             }
           },
           "required": [
             "text"
-          ],
-          "additionalProperties": false,
-          "$schema": "http://json-schema.org/draft-07/schema#"
+          ]
         },
         "outputSchema": null
       },
@@ -245,6 +239,7 @@
           "openWorldHint": false
         },
         "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
           "type": "object",
           "properties": {
             "kind": {
@@ -261,14 +256,12 @@
               ]
             },
             "limit": {
+              "default": 20,
               "type": "integer",
               "minimum": 1,
-              "maximum": 100,
-              "default": 20
+              "maximum": 100
             }
-          },
-          "additionalProperties": false,
-          "$schema": "http://json-schema.org/draft-07/schema#"
+          }
         },
         "outputSchema": null
       },
@@ -282,18 +275,18 @@
           "openWorldHint": false
         },
         "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
           "type": "object",
           "properties": {
             "id": {
               "type": "string",
-              "format": "uuid"
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
             }
           },
           "required": [
             "id"
-          ],
-          "additionalProperties": false,
-          "$schema": "http://json-schema.org/draft-07/schema#"
+          ]
         },
         "outputSchema": null
       }
