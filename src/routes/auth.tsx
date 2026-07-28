@@ -7,7 +7,17 @@ import { lovable } from "@/integrations/lovable/index";
 import { Sparkles, Mail, Lock, ArrowRight, Loader2 } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
-const searchSchema = z.object({ mode: z.enum(["signin", "signup"]).optional() });
+const searchSchema = z.object({
+  mode: z.enum(["signin", "signup"]).optional(),
+  next: z.string().optional(),
+});
+
+// Only allow same-origin relative paths as post-login redirects.
+function safeNext(next: string | undefined): string | null {
+  if (!next) return null;
+  if (!next.startsWith("/") || next.startsWith("//")) return null;
+  return next;
+}
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (search) => searchSchema.parse(search),
@@ -30,22 +40,35 @@ function AuthPage() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
+  const nextPath = safeNext(search.next);
+
+  function goPostLogin() {
+    if (nextPath) {
+      window.location.href = nextPath;
+      return;
+    }
+    navigate({ to: "/dashboard" });
+  }
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/dashboard" });
+      if (data.session) goPostLogin();
     });
-  }, [navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function handleEmail(e: React.FormEvent) {
     e.preventDefault();
     if (loading) return;
     setLoading(true);
     try {
+      const redirectTarget = nextPath
+        ? `${window.location.origin}${nextPath}`
+        : `${window.location.origin}/dashboard`;
       if (mode === "signup") {
         const { error } = await supabase.auth.signUp({
           email, password,
-          options: { data: { full_name: name }, emailRedirectTo: `${window.location.origin}/dashboard` },
+          options: { data: { full_name: name }, emailRedirectTo: redirectTarget },
         });
         if (error) throw error;
         toast.success("Account created — signing you in…");
@@ -54,7 +77,7 @@ function AuthPage() {
         if (error) throw error;
       }
       const { data } = await supabase.auth.getSession();
-      if (data.session) navigate({ to: "/dashboard" });
+      if (data.session) goPostLogin();
     } catch (err) {
       toast.error((err as Error).message);
     } finally {
@@ -65,19 +88,23 @@ function AuthPage() {
   async function handleGoogle() {
     setLoading(true);
     try {
-      const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
+      const redirectTarget = nextPath
+        ? `${window.location.origin}${nextPath}`
+        : window.location.origin;
+      const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: redirectTarget });
       if (result.error) {
         toast.error(result.error.message);
         setLoading(false);
         return;
       }
       if (result.redirected) return;
-      navigate({ to: "/dashboard" });
+      goPostLogin();
     } catch (err) {
       toast.error((err as Error).message);
       setLoading(false);
     }
   }
+
 
   return (
     <div className="bg-aurora relative flex min-h-screen items-center justify-center overflow-hidden px-4">
