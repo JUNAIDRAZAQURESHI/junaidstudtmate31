@@ -1,5 +1,4 @@
-// Server-only Lovable AI Gateway helper. Never import from client-reachable code at module scope.
-const GATEWAY_URL = "https://ai.gateway.lovable.dev/v1/chat/completions";
+const GATEWAY_URL = "https://openrouter.ai/api/v1/chat/completions";
 
 export type ChatContentPart =
   | { type: "text"; text: string }
@@ -9,16 +8,23 @@ export type ChatMessage = {
   content: string | ChatContentPart[];
 };
 
-export async function callLovableAI(messages: ChatMessage[], model = "google/gemini-3.6-flash"): Promise<string> {
-  const key = process.env.LOVABLE_API_KEY;
-  if (!key) throw new Error("Missing LOVABLE_API_KEY");
+function buildHeaders(): Record<string, string> {
+  const key = process.env.OPENROUTER_API_KEY;
+  if (!key) throw new Error("Missing OPENROUTER_API_KEY");
+  return {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${key}`,
+    "HTTP-Referer": "https://studymate.app",
+    "X-Title": "StudyMate Pro",
+  };
+}
+
+export async function callLovableAI(messages: ChatMessage[], model = "gpt-4o-mini"): Promise<string> {
+  const headers = buildHeaders();
 
   const res = await fetch(GATEWAY_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${key}`,
-    },
+    headers,
     body: JSON.stringify({ model, messages, stream: false }),
   });
 
@@ -33,16 +39,12 @@ export async function callLovableAI(messages: ChatMessage[], model = "google/gem
   return data.choices?.[0]?.message?.content ?? "";
 }
 
-export async function streamLovableAI(messages: ChatMessage[], model = "google/gemini-3.6-flash"): Promise<Response> {
-  const key = process.env.LOVABLE_API_KEY;
-  if (!key) throw new Error("Missing LOVABLE_API_KEY");
+export async function streamLovableAI(messages: ChatMessage[], model = "gpt-4o-mini"): Promise<Response> {
+  const headers = buildHeaders();
 
   const upstream = await fetch(GATEWAY_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${key}`,
-    },
+    headers,
     body: JSON.stringify({ model, messages, stream: true }),
   });
 

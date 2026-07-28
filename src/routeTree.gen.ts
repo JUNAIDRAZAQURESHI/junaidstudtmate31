@@ -9,41 +9,35 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as PricingRouteImport } from './routes/pricing'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthenticatedTranslateRouteImport } from './routes/_authenticated/translate'
-import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
-import { Route as AuthenticatedResumeRouteImport } from './routes/_authenticated/resume'
-import { Route as AuthenticatedQuizRouteImport } from './routes/_authenticated/quiz'
-import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
-import { Route as AuthenticatedPortfolioRouteImport } from './routes/_authenticated/portfolio'
-import { Route as AuthenticatedPdfRouteImport } from './routes/_authenticated/pdf'
-import { Route as AuthenticatedPaymentRouteImport } from './routes/_authenticated/payment'
-import { Route as AuthenticatedNotesRouteImport } from './routes/_authenticated/notes'
-import { Route as AuthenticatedMcqRouteImport } from './routes/_authenticated/mcq'
-import { Route as AuthenticatedHistoryRouteImport } from './routes/_authenticated/history'
-import { Route as AuthenticatedGrammarRouteImport } from './routes/_authenticated/grammar'
-import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
-import { Route as AuthenticatedChatRouteImport } from './routes/_authenticated/chat'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedChatRouteImport } from './routes/_authenticated/chat'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedGrammarRouteImport } from './routes/_authenticated/grammar'
+import { Route as AuthenticatedHistoryRouteImport } from './routes/_authenticated/history'
+import { Route as AuthenticatedMcqRouteImport } from './routes/_authenticated/mcq'
+import { Route as AuthenticatedNotesRouteImport } from './routes/_authenticated/notes'
+import { Route as AuthenticatedPaymentRouteImport } from './routes/_authenticated/payment'
+import { Route as AuthenticatedPdfRouteImport } from './routes/_authenticated/pdf'
+import { Route as AuthenticatedPortfolioRouteImport } from './routes/_authenticated/portfolio'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedQuizRouteImport } from './routes/_authenticated/quiz'
+import { Route as AuthenticatedResumeRouteImport } from './routes/_authenticated/resume'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedTranslateRouteImport } from './routes/_authenticated/translate'
 
-const PricingRoute = PricingRouteImport.update({
-  id: '/pricing',
-  path: '/pricing',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -51,78 +45,24 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedTranslateRoute = AuthenticatedTranslateRouteImport.update({
-  id: '/translate',
-  path: '/translate',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedResumeRoute = AuthenticatedResumeRouteImport.update({
-  id: '/resume',
-  path: '/resume',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedQuizRoute = AuthenticatedQuizRouteImport.update({
-  id: '/quiz',
-  path: '/quiz',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedPortfolioRoute = AuthenticatedPortfolioRouteImport.update({
-  id: '/portfolio',
-  path: '/portfolio',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedPdfRoute = AuthenticatedPdfRouteImport.update({
-  id: '/pdf',
-  path: '/pdf',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedPaymentRoute = AuthenticatedPaymentRouteImport.update({
-  id: '/payment',
-  path: '/payment',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedNotesRoute = AuthenticatedNotesRouteImport.update({
-  id: '/notes',
-  path: '/notes',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedMcqRoute = AuthenticatedMcqRouteImport.update({
-  id: '/mcq',
-  path: '/mcq',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedHistoryRoute = AuthenticatedHistoryRouteImport.update({
-  id: '/history',
-  path: '/history',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedGrammarRoute = AuthenticatedGrammarRouteImport.update({
-  id: '/grammar',
-  path: '/grammar',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedChatRoute = AuthenticatedChatRouteImport.update({
@@ -130,9 +70,69 @@ const AuthenticatedChatRoute = AuthenticatedChatRouteImport.update({
   path: '/chat',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedGrammarRoute = AuthenticatedGrammarRouteImport.update({
+  id: '/grammar',
+  path: '/grammar',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedHistoryRoute = AuthenticatedHistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMcqRoute = AuthenticatedMcqRouteImport.update({
+  id: '/mcq',
+  path: '/mcq',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedNotesRoute = AuthenticatedNotesRouteImport.update({
+  id: '/notes',
+  path: '/notes',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPaymentRoute = AuthenticatedPaymentRouteImport.update({
+  id: '/payment',
+  path: '/payment',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPdfRoute = AuthenticatedPdfRouteImport.update({
+  id: '/pdf',
+  path: '/pdf',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPortfolioRoute = AuthenticatedPortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedQuizRoute = AuthenticatedQuizRouteImport.update({
+  id: '/quiz',
+  path: '/quiz',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedResumeRoute = AuthenticatedResumeRouteImport.update({
+  id: '/resume',
+  path: '/resume',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedTranslateRoute = AuthenticatedTranslateRouteImport.update({
+  id: '/translate',
+  path: '/translate',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
@@ -285,32 +285,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/pricing': {
-      id: '/pricing'
-      path: '/pricing'
-      fullPath: '/pricing'
-      preLoaderRoute: typeof PricingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -320,102 +299,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/translate': {
-      id: '/_authenticated/translate'
-      path: '/translate'
-      fullPath: '/translate'
-      preLoaderRoute: typeof AuthenticatedTranslateRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/settings': {
-      id: '/_authenticated/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/resume': {
-      id: '/_authenticated/resume'
-      path: '/resume'
-      fullPath: '/resume'
-      preLoaderRoute: typeof AuthenticatedResumeRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/quiz': {
-      id: '/_authenticated/quiz'
-      path: '/quiz'
-      fullPath: '/quiz'
-      preLoaderRoute: typeof AuthenticatedQuizRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/profile': {
-      id: '/_authenticated/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof AuthenticatedProfileRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/portfolio': {
-      id: '/_authenticated/portfolio'
-      path: '/portfolio'
-      fullPath: '/portfolio'
-      preLoaderRoute: typeof AuthenticatedPortfolioRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/pdf': {
-      id: '/_authenticated/pdf'
-      path: '/pdf'
-      fullPath: '/pdf'
-      preLoaderRoute: typeof AuthenticatedPdfRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/payment': {
-      id: '/_authenticated/payment'
-      path: '/payment'
-      fullPath: '/payment'
-      preLoaderRoute: typeof AuthenticatedPaymentRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/notes': {
-      id: '/_authenticated/notes'
-      path: '/notes'
-      fullPath: '/notes'
-      preLoaderRoute: typeof AuthenticatedNotesRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/mcq': {
-      id: '/_authenticated/mcq'
-      path: '/mcq'
-      fullPath: '/mcq'
-      preLoaderRoute: typeof AuthenticatedMcqRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/history': {
-      id: '/_authenticated/history'
-      path: '/history'
-      fullPath: '/history'
-      preLoaderRoute: typeof AuthenticatedHistoryRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/grammar': {
-      id: '/_authenticated/grammar'
-      path: '/grammar'
-      fullPath: '/grammar'
-      preLoaderRoute: typeof AuthenticatedGrammarRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/dashboard': {
-      id: '/_authenticated/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/chat': {
@@ -425,11 +341,95 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedChatRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/admin': {
-      id: '/_authenticated/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/grammar': {
+      id: '/_authenticated/grammar'
+      path: '/grammar'
+      fullPath: '/grammar'
+      preLoaderRoute: typeof AuthenticatedGrammarRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/history': {
+      id: '/_authenticated/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof AuthenticatedHistoryRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/mcq': {
+      id: '/_authenticated/mcq'
+      path: '/mcq'
+      fullPath: '/mcq'
+      preLoaderRoute: typeof AuthenticatedMcqRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/notes': {
+      id: '/_authenticated/notes'
+      path: '/notes'
+      fullPath: '/notes'
+      preLoaderRoute: typeof AuthenticatedNotesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/payment': {
+      id: '/_authenticated/payment'
+      path: '/payment'
+      fullPath: '/payment'
+      preLoaderRoute: typeof AuthenticatedPaymentRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/pdf': {
+      id: '/_authenticated/pdf'
+      path: '/pdf'
+      fullPath: '/pdf'
+      preLoaderRoute: typeof AuthenticatedPdfRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/portfolio': {
+      id: '/_authenticated/portfolio'
+      path: '/portfolio'
+      fullPath: '/portfolio'
+      preLoaderRoute: typeof AuthenticatedPortfolioRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/quiz': {
+      id: '/_authenticated/quiz'
+      path: '/quiz'
+      fullPath: '/quiz'
+      preLoaderRoute: typeof AuthenticatedQuizRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/resume': {
+      id: '/_authenticated/resume'
+      path: '/resume'
+      fullPath: '/resume'
+      preLoaderRoute: typeof AuthenticatedResumeRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/translate': {
+      id: '/_authenticated/translate'
+      path: '/translate'
+      fullPath: '/translate'
+      preLoaderRoute: typeof AuthenticatedTranslateRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
   }
@@ -485,3 +485,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
